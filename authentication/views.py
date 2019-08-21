@@ -15,7 +15,7 @@ from authentication.helpers.tasks import send_email_notification
 class RegistrationView(APIView):
     permission_classes = (AllowAny, )
     serializer_class = RegistrationSerializer
-    renderer_classes= (UserJSONRenderer)
+    renderer_classes= (UserJSONRenderer, )
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -35,7 +35,7 @@ class RegistrationView(APIView):
             "text_body":"authentication/templates/activate_account.html",
             "html_body":"authentication/templates/activate_account.txt",
             "context":{
-                'username': user_data['first_name'],
+                'username': user_data['username'],
                 'url':url
             }
 
