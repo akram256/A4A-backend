@@ -25,8 +25,8 @@ def send_email_notification(body):
     html_body = render_to_string(body['html_body'], body['context'])
 
     msg = EmailMultiAlternatives(subject=body['subject'],
-                                 from_email="noreply@landville.com",
-                                 to=body['recipient'],
+                                 from_email="noreply@mukasaakram55@gmail.com",
+                                 to=body['reciepent'],
                                  body=text_body)
     msg.attach_alternative(html_body, "text/html")
     msg.send()

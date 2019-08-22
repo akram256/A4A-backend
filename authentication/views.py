@@ -32,8 +32,8 @@ class RegistrationView(APIView):
         payload ={
             "subject":"Welcome to A4A events, Please verify your account",
             "reciepent" :[user_data["email"]],
-            "text_body":"authentication/templates/activate_account.html",
-            "html_body":"authentication/templates/activate_account.txt",
+            "text_body":"activate_account.html",
+            "html_body":"activate_account.txt",
             "context":{
                 'username': user_data['username'],
                 'url':url
