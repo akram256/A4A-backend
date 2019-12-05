@@ -10,7 +10,7 @@ coverage==4.5.4
 coveralls==1.8.2
 cryptography==2.7
 dj-database-url==0.5.0
-Django==2.2.4
+Django==2.2.8
 django-heroku==0.3.1
 djangorestframework==3.10.2
 docopt==0.6.2
