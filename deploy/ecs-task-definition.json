@@ -1,0 +1,34 @@
+{
+  "cpu": "<ECS_CPU_SIZE>",
+  "memory": "<ECS_MEMORY_SIZE>",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "containerDefinitions": [
+      {
+        "name": "<ECS_SERVICE_NAME>",
+        "image": "<IMAGE_VERSION>",
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "options": {
+            "awslogs-group": "/ecs/<ECS_CLUSTER_NAME>/<ECS_SERVICE_NAME>",
+            "awslogs-region": "<AWS_DEFAULT_REGION>",
+            "awslogs-stream-prefix": "ecs"
+          }
+        },
+        "portMappings": [
+          {
+            "protocol": "tcp",
+            "containerPort": 80
+          }
+        ],
+        "environment": [
+          {
+            "name": "CLUSTER",
+            "value": "<ECS_CLUSTER_NAME>"
+          }
+        ]
+      }
+  ]
+}

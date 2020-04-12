@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  lottoly:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_NAME=${POSTGRESQL_DATABASE}
+      - DATABASE_USER=${POSTGRESQL_USERNAME}
+      - DATABASE_HOST=db
+      - DATABASE_PASSWORD=${POSTGRESQL_PASSWORD}
+      - DATABASE_PORT=5432
+      - DJANGO_SETTINGS_MODULE=ab_lotto.settings.local
+  db:
+    image: postgres:10.9
+    user: root
+    restart: always
+    ports: 
+      - 5430:5432
+    environment: 
+      - POSTGRESQL_USERNAME=${POSTGRESQL_USERNAME}
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  redis:
+    image: redis:latest
+    restart: always
+    expose:
+      - '6379'
+    ports:
+      - '6379:6379'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+  # celery:
+  #   container_name: celery
+  #   build:
+  #     context: .
+  #     args:
+  #       buildno: 1
+  #   image: lepsta/platform:dev
+  #   command: celery -A lepsta worker -l info
+  #   volumes:
+  #     - .:/www
+  #   depends_on:
+  #     - db
+  #     - redis
+
+volumes: 
+  pgdata:

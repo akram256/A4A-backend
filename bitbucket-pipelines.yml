@@ -1,0 +1,82 @@
+definitions:
+  services:
+    docker:
+      memory: 3072  
+options:
+  docker: true
+image: python:3.7.2 
+build_and_test: &build_and_test
+  - step:
+     name: Run unit tests
+     caches:
+       - pip
+     script:
+       - pip install -r requirements.txt
+       #- python manage.py test
+publish_ecr_image: &publish_ecr_image
+  - step:
+      name: Build and publish image to ECR
+      image: atlassian/pipelines-awscli:latest
+      services:
+          - docker
+      caches:
+          - docker
+      script:
+          - if [ "$BITBUCKET_BRANCH" == "master" ]; then export MODE=live; fi
+          - if [ "$BITBUCKET_BRANCH" == "staging" ]; then export MODE=staging; fi
+          - export IMAGE_NAME="${ECS_SERVICE_NAME}:$MODE-${BITBUCKET_BUILD_NUMBER}"
+          - export ECR_IMAGE_NAME=$ECR_URI/$IMAGE_NAME
+          - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+          - echo "mode is $MODE"
+          - docker build --build-arg mode=$MODE -f ./deploy/Dockerfile -t $IMAGE_NAME .
+          - docker tag $IMAGE_NAME $ECR_IMAGE_NAME
+          - docker push $ECR_IMAGE_NAME
+
+create_task_in_live_cluster: &create_task_in_live_cluster
+  - step:
+      name: Create a new ecs task revision
+      image: atlassian/pipelines-awscli:latest
+      deployment: live
+      script:
+        - ./deploy/define-task.sh
+      artifacts:
+        - ecr_task_version.txt
+
+create_task_for_staging_cluster: &create_task_for_staging_cluster
+  - step:
+      name: Create a new ecs task revision
+      image: atlassian/pipelines-awscli:latest
+      deployment: staging
+      script:
+        - ./deploy/define-task.sh
+      artifacts:
+        - ecr_task_version.txt
+
+deploy_to_aws: &deploy_to_aws
+  - step:
+      name: Deploy to aws
+      image: atlassian/pipelines-awscli:latest
+      script:
+        - export TASK_DEFINITION=$(cat ./ecr_task_version.txt)
+        - export ECS_CLUSTER_NAME="$( cut -d '-' -f 1 <<< "${TASK_DEFINITION}")"
+        - echo "Deploying to the cluster $ECS_CLUSTER_NAME on ECS..."
+        - aws ecs update-service --cluster "${ECS_CLUSTER_NAME}" --force-new-deployment --service "${ECS_SERVICE_NAME}" --task-definition
+          "${TASK_DEFINITION}" --desired-count ${TASK_DESIRED_COUNT:-1}
+
+pipelines:
+  default:
+    - <<: *build_and_test
+  pull-requests:
+    '**':
+      - <<: *build_and_test
+  branches:
+    master:
+      - <<: *build_and_test
+      - <<: *publish_ecr_image
+      - <<: *create_task_in_live_cluster
+      - <<: *deploy_to_aws
+    staging:
+      - <<: *build_and_test
+      - <<: *publish_ecr_image
+      - <<: *create_task_for_staging_cluster
+      - <<: *deploy_to_aws
