@@ -16,22 +16,22 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Create your views here.
-class JobCategoryView(ListAPIView):
+class ArtistCategoryView(ListAPIView):
     serializer_class=ArtistCategorySerializer
     permission_classes=(AllowAny,)
     queryset=ArtistCategory.objects.all()
 
 
     def post(self, request):
-        post_data = {"name":request.data["name"],"details":request.data["details"],"summary":request.data["summary"],"image":request.data["image"],"avg_budget":request.data["avg_budget"],"reviews":request.data["reviews"],"no_running_services":request.data["no_running_services"]}
+        post_data = {"name":request.data["name"],"details":request.data["details"]}
         serializer = self.get_serializer(data=post_data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response({"message":"Job Category successfully created"},
+        return Response({"message":"Artist Category successfully created"},
                         status=status.HTTP_201_CREATED)
 
 
-class JobCategoryRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+class ArtistCategoryRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
 
     serializer_class=ArtistCategorySerializer
     permission_classes=(AllowAny,)
@@ -55,12 +55,12 @@ class JobCategoryRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
-        return Response({"message": "Job Category has been successfully deleted"},
+        return Response({"message": "Artist Category has been successfully deleted"},
                         status=status.HTTP_204_NO_CONTENT)
 
 
 
-class UserJobViewSet(viewsets.ModelViewSet):
+class ArtistViewSet(viewsets.ModelViewSet):
     serializer_class=ArtistSerializer
     permission_classes=(AllowAny,)
     queryset = ArtistCategory.objects.all()
@@ -69,16 +69,11 @@ class UserJobViewSet(viewsets.ModelViewSet):
 
         post_data = {
                     # "title":request.data["title"],
-                    "details":request.data["details"],
-                    # "summary":request.data["summary"],
-                    "budget":request.data["budget"],
-                    "job_delivery_time":request.data["job_delivery_time"],
-                    # "pictures":request.data["pictures"],
-                    "location":request.data["location"],
-                    "job_category_id":request.data["job_category_id"],
-                    # "created_by":request.data["created_by"],
-                    # "status":request.data["status"],
-                    "base_charge_amount":request.data["base_charge_amount"],
+                    "first_name":request.data["first_name"],
+                    "last_name":request.data["last_name"],
+                    "stage_name":request.data["stage_name"],
+                    "price":request.data["price"],
+                    "category":request.data["category"],
 
                      }
         serializer = self.get_serializer(data=post_data)
@@ -89,13 +84,13 @@ class UserJobViewSet(viewsets.ModelViewSet):
         sufficient_balance = user_wallet.is_balance_sufficient(amount)
         if not sufficient_balance:
             serializer.save()
-            return Response({'detail': 'Job successfully created, Please Fund your wallet to make Job active'},
+            return Response({'detail': 'Artist successfully added, Please Fund your wallet to make Job active'},
                                 status=status.HTTP_400_BAD_REQUEST) 
         serializer.save(is_active=True)
         return Response({"message":"Job successfully created"},
                         status=status.HTTP_201_CREATED)
 
-class UpdateJobStatus(ListAPIView):
+class UpdateArtistStatus(ListAPIView):
     permission_classes=(IsUser,)
     serializer_class=ArtistSerializer
    
@@ -162,7 +157,7 @@ class UpdateJobStatus(ListAPIView):
             Response({'message': 'Field errors'}, status=status.HTTP_400_BAD_REQUEST)
       
 
-class UserJobRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+class ArtistRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
 
     serializer_class=ArtistSerializer
     permission_classes=(AllowAny,)
@@ -186,7 +181,7 @@ class UserJobRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
-        return Response({"message": "User Job has been successfully deleted"},
+        return Response({"message": "Artist has been successfully deleted"},
                         status=status.HTTP_204_NO_CONTENT)
 
 
