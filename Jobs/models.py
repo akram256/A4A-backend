@@ -10,7 +10,7 @@ class ArtistCategory(BaseAbstractModel):
     """ This is model that categorizes the jobs to be done """
 
     name= models.CharField(max_length=255, blank=True, null=True)
-    details=models.TextField(null=True)
+    details=models.TextField(null=True)models.ForeignKey
 
     def __str__(self):
         return "{}".format(self.name)

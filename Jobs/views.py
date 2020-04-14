@@ -58,8 +58,6 @@ class ArtistCategoryRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
         return Response({"message": "Artist Category has been successfully deleted"},
                         status=status.HTTP_204_NO_CONTENT)
 
-
-
 class ArtistViewSet(viewsets.ModelViewSet):
     serializer_class=ArtistSerializer
     permission_classes=(AllowAny,)
@@ -68,7 +66,6 @@ class ArtistViewSet(viewsets.ModelViewSet):
     def create(self, request):
 
         post_data = {
-                    # "title":request.data["title"],
                     "first_name":request.data["first_name"],
                     "last_name":request.data["last_name"],
                     "stage_name":request.data["stage_name"],
@@ -97,7 +94,6 @@ class UpdateArtistStatus(ListAPIView):
     def get_queryset(self,job_id):
         try:
             Job_object = UserJob.objects.get(id=job_id)
-            #resolved_game = ResolvedGame.objects.filter(game = game_object)
             print(Job_object)
             return Job_object
         except Exception as e:
@@ -123,10 +119,6 @@ class UpdateArtistStatus(ListAPIView):
         else:
             return Response({'message': 'Requested resource does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-
-
     def post(self,request,*args, **kwargs):
         pass
         serializer = self.serializer_class(data=request.data)
@@ -143,10 +135,6 @@ class UpdateArtistStatus(ListAPIView):
                 if not sufficient_balance:
                     return Response({'detail': 'Please Fund your wallet to make Job active'},
                                         status=status.HTTP_400_BAD_REQUEST) 
-                # active_job= UserJob.objects.filter(is_active=True)
-                # if active_job:
-                #     return Response({'message': 'Job is alreadly active'}, status=status.HTTP_400_BAD_REQUEST)
-                # else:
                 job.update(is_active=True)
                 return Response({'message': 'Job has been made active'}, status=status.HTTP_200_OK)
 
