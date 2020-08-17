@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'Wallets',
     'Jobs',
     'Notifications',
+    'paymets',
 ]
 
 MIDDLEWARE = [
