@@ -23,9 +23,9 @@ class BookingArtistView(ListAPIView):
         serializer = self.get_serializer(data=post_data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        
-        return Response({"message":"Booking made"},
-                       status=status.HTTP_201_CREATED)
+        return redirect(reverse('payment:process')) 
+       # return Response({"message":"Booking made"},
+       #                status=status.HTTP_201_CREATED)
        
 
 class BookingRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
