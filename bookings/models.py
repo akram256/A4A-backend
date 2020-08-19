@@ -12,12 +12,13 @@ class Bookings(BaseAbstractModel):
     time_of_performance=models.DateTimeField(null=True)
     conditions=models.TextField(null=True)
     location=models.CharField(max_length=255, blank=True, null=True)
+    paid = models.BooleanField(default=False)
 
 class Events(BaseAbstractModel):
     """model for events"""
     artist=models.ForeignKey(to="Artist", on_delete=models.CASCADE)
     venue_of_performance=models.CharField(max_length=255, blank=True, null=True)
-    date_of_event==models.DateTimeField(null=True)
+    date_of_event=models.DateTimeField(null=True)
 
 
 

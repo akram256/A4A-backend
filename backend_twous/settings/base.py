@@ -46,8 +46,10 @@ INSTALLED_APPS = [
     'Auth.apps.AuthConfig',
     'Wallets',
     'Jobs',
+    'bookings',
     'Notifications',
     'payments',
+    
 ]
 
 MIDDLEWARE = [
@@ -263,3 +265,14 @@ CACHE_TIME = int(os.environ.get('CACHE_TIME', '172800'))
 EMAIL_CACHE_TIME = int(os.environ.get('EMAIL_CACHE_TIME', '7200'))
 CHARGE_PER_DELIVERY = os.environ.get('CHARGE_PER_DELIVERY', '')
 
+# Braintree settings
+BRAINTREE_MERCHANT_ID = 'tcmvxzxb324cb6m9'  # Merchant ID
+BRAINTREE_PUBLIC_KEY = '3stnqqmz29vnknt5'   # Public Key
+BRAINTREE_PRIVATE_KEY = '8bcb39e796847837dc653eaca84366b4'  # Private key
+import braintree
+BRAINTREE_CONF = braintree.Configuration(
+    braintree.Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+)

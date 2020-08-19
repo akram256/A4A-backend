@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .serializers import BookingSerializer,EventSerializer
 from rest_framework import status
+from django.urls import reverse
+from django.shortcuts import render, redirect
 
 
 class BookingArtistView(ListAPIView):
@@ -21,8 +23,10 @@ class BookingArtistView(ListAPIView):
         serializer = self.get_serializer(data=post_data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        
         return Response({"message":"Booking made"},
-                        status=status.HTTP_201_CREATED)
+                       status=status.HTTP_201_CREATED)
+       
 
 class BookingRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
 

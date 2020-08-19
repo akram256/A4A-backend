@@ -6,7 +6,7 @@ from Auth.models import User
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bookings
-        fields = ('user', 'venue', 'time_of_performance', 'conditions', 'location',)
+        fields = ('user', 'venue', 'time_of_performance', 'conditions', 'location','paid')
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
