@@ -2,7 +2,7 @@ from django.db import models
 from Auth.models import User
 from helpers.models import BaseAbstractModel
 from decimal import Decimal
-
+from Jobs.models import Artist
 # Create your models here.
 
 class Bookings(BaseAbstractModel):

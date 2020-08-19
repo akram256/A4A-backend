@@ -6,7 +6,7 @@ from .models import ArtistCategory, Artist
 admin.site.register(ArtistCategory)
 
 @admin.register(Artist)
-class OrderAdmin(admin.ModelAdmin):
+class BookingAdmin(admin.ModelAdmin):
     list_display = ['id', 'first_name', 'last_name', 'stage_name', 'manager_name',
                     'management_label', 'manager_phone_no', 'pictures', 'price',
                     'category', 'is_active']
