@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'Auth.apps.AuthConfig',
     'Wallets',
+    'tickets',
     'Jobs',
     'bookings',
     'Notifications',
@@ -222,7 +223,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
     ),
-   'DEFAULT_SCHEMA_CLASS':('rest_framework.schemas.coreapi.AutoSchema'),
+#    'DEFAULT_SCHEMA_CLASS':('rest_framework.schemas.coreapi.AutoSchema'),
    # 'DEFAULT_FILTER_BACKENDS': (
    #     'django_filters.rest_framework.DjangoFilterBackend',
     #),
