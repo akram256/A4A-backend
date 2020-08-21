@@ -136,33 +136,33 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# CELERY_BROKER_URL = 'redis://{}:{}'.format(os.environ.get('REDIS_HOST'), os.environ.get('REDIS_PORT'))
-# CELERY_RESULT_BACKEND = 'redis://{}:{}'.format(os.environ.get('REDIS_HOST'), os.environ.get('REDIS_PORT'))
-# CELERY_ACCEPT_CONTENT = ['application/json']
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_TIMEZONE = 'UTC'
-# CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 691200}
-# CELERY_ALWAYS_EAGER=False
-# TIME_ZONE = 'UTC'
-
-# AWS Credentials
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-# Celery
-CELERY_BROKER_URL = "sqs://%s:%s@" %(AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY)
+CELERY_BROKER_URL = 'redis://{}:{}'.format(os.environ.get('REDIS_HOST'), os.environ.get('REDIS_PORT'))
+CELERY_RESULT_BACKEND = 'redis://{}:{}'.format(os.environ.get('REDIS_HOST'), os.environ.get('REDIS_PORT'))
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_DEFAULT_QUEUE = 'celery'
-CELERY_RESULT_BACKEND = None # Disabling the results backend
+CELERY_TIMEZONE = 'UTC'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 691200}
 CELERY_ALWAYS_EAGER=False
 TIME_ZONE = 'UTC'
-CELERY_TIMEZONE = 'UTC'
-BROKER_TRANSPORT_OPTIONS = {
-    'region': 'us-east-2',
-    'polling_interval': 20,
-}
+
+# AWS Credentials
+# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+# # Celery
+# CELERY_BROKER_URL = "sqs://%s:%s@" %(AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY)
+# CELERY_ACCEPT_CONTENT = ['application/json']
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_DEFAULT_QUEUE = 'celery'
+# CELERY_RESULT_BACKEND = None # Disabling the results backend
+# CELERY_ALWAYS_EAGER=False
+# TIME_ZONE = 'UTC'
+# CELERY_TIMEZONE = 'UTC'
+# BROKER_TRANSPORT_OPTIONS = {
+#     'region': 'us-east-2',
+#     'polling_interval': 20,
+# }
 
 LOGGING = {
     'version': 1,
