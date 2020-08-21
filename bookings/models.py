@@ -15,6 +15,12 @@ class Bookings(BaseAbstractModel):
     paid = models.BooleanField(default=False)
     braintree_id = models.CharField(max_length=150, blank=True)
 
+
+    def __str__(self):
+        return f'Bookings {self.id}'
+    def get_total_cost(self):
+        return sum(Bookings.get_cost() for Booking in self.Bookings.object.all())
+
 class Events(BaseAbstractModel):
     """model for events"""
     artist=models.ForeignKey(to="Jobs.Artist", on_delete=models.CASCADE)
