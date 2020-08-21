@@ -29,7 +29,8 @@ urlpatterns = [
     path ('api/v1/', include('routes.notifications.urls')),
     path('api/v1/', include('routes.wallets.urls')),
     path('api/v1/', include('routes.payment.urls')),
-]
+    path('api/v1/', include('routes.tickets.urls')),
+    ]
 if settings.DEBUG:
 
     urlpatterns += static(settings.STATIC_URL,
