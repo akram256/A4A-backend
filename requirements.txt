@@ -9,7 +9,7 @@ chardet==3.0.4
 contextlib2==0.5.5
 coreapi==2.3.3
 coreschema==0.0.4
-Django==2.2.2
+Django==2.2.24
 django-admin-rangefilter==0.5.2
 django-cors-headers==3.0.2
 django-debug-toolbar==2.0
