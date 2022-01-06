@@ -3,7 +3,7 @@ billiard==3.6.0.0
 boto3==1.9.209
 botocore==1.12.209
 cachetools==4.0.0
-celery==4.3.0
+celery==5.2.2
 certifi==2019.6.16
 chardet==3.0.4
 contextlib2==0.5.5
